@@ -1,0 +1,26 @@
+header{
+    background-color: black;
+    color: white;
+}
+header a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin:5px;
+    padding: 5px;
+    display: inline-block;
+}
+.droite{
+    float: right;
+    border-left: 2px solid white;
+}
+.gauche{
+    float:left;
+    border-right: 2px solid white;
+}
+table{
+    border-collapse: collapse;
+}
+td,th{
+    border:1px solid black;
+}
