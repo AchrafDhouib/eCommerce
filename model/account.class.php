@@ -5,6 +5,7 @@ class Account
     public $user_name;
     public $email;
     public $pwd;
+    public $role;
 
     function verifyAccount()
     {
@@ -50,18 +51,27 @@ class Account
             require_once ('pdo.php');
             $cnx = new connexion();
             $pdo = $cnx->CNXbase();
-            $req = "SELECT user_name,email FROM account";
+            $req = "SELECT id,user_name,email,role FROM account";
             $res = $pdo->query($req) or print_r($pdo->errorInfo());
             return $res;
         }
-    function updateAccount()
+    function updateAccount($id)
         {
             require_once ('pdo.php');
             $cnx = new connexion();
             $pdo = $cnx->CNXbase();
-            $req = `UPDATE account SET  user_name='$this->user_name', email='$this->email', pwd='$this->pwd' WHERE id=$this->id`;
+            $req = "UPDATE account SET  user_name='$this->user_name', email='$this->email', pwd='$this->pwd' WHERE id=$this->id";
             $pdo->exec($req) or print_r($pdo->errorInfo());
         }  
+
+    function updateAccountRole($id, $role)
+        {
+            require_once ('pdo.php');
+            $cnx = new connexion();
+            $pdo = $cnx->CNXbase();
+            $req = "UPDATE account SET  role='$role' WHERE id=$id AND  role!='2'";
+            $pdo->exec($req) or print_r($pdo->errorInfo());
+        }
 
     function addToCart($product_id, $quantity)
         {
@@ -85,16 +95,25 @@ class Account
             require_once ('pdo.php');
             $cnx = new connexion();
             $pdo = $cnx->CNXbase();
-            $req = "SELECT * FROM cart WHERE user_id='$this->id'";
+            $req = "SELECT c.*,p.name, p.price,p.discount,p.photo FROM cart c JOIN product p ON c.product_id = p.id WHERE c.user_id='$this->id'";
             $res = $pdo->query($req) or print_r($pdo->errorInfo());
             return $res;
         }
-        function deleteCartProduct($id)
+        function getCartProduct($product_id)
         {
             require_once ('pdo.php');
             $cnx = new connexion();
             $pdo = $cnx->CNXbase();
-            $req = "DELETE FROM cart WHERE id='$id'";
+            $req = "SELECT c.*,p.name, p.price,p.discount,p.photo FROM cart c JOIN product p ON c.product_id = p.id WHERE c.user_id='$this->id' AND product_id='$product_id'";
+            $res = $pdo->query($req) or print_r($pdo->errorInfo());
+            return $res;
+        }
+        function deleteCartProduct($product_id)
+        {
+            require_once ('pdo.php');
+            $cnx = new connexion();
+            $pdo = $cnx->CNXbase();
+            $req = "DELETE FROM cart WHERE user_id='$this->id' AND product_id='$product_id'";
             $pdo->exec($req);
         }
     function sellOperation($product_id, $originQuantity ,$sellQuantity)
