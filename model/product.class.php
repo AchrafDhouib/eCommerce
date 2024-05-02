@@ -18,8 +18,8 @@ class Product
         require_once ('pdo.php');
         $cnx = new connexion();
         $pdo = $cnx->CNXbase();
-        $req = `INSERT INTO product (name, price, discount, quantity, photo) VALUES
-        ('$this->name','$this->price','$this->discount',$this->quantity, '$this->photo', '$this->description')`;
+        $req = "INSERT INTO product (name, price, discount, quantity, photo,description) VALUES
+        ('$this->name','$this->price','$this->discount',$this->quantity, '$this->photo', '$this->description')";
         $pdo->exec($req) or print_r($pdo->errorInfo());
     }
 
@@ -48,7 +48,7 @@ class Product
         require_once ('pdo.php');
         $cnx = new connexion();
         $pdo = $cnx->CNXbase();
-        $req = `UPDATE product SET  name='$this->name', price='$this->price', discount='$this->discount', quantity=$this->quantity, photo='$this->photo', description='$this->description' WHERE id=$id`;
+        $req = "UPDATE product SET  name='$this->name', price='$this->price', discount='$this->discount', quantity=$this->quantity, photo='$this->photo', description='$this->description' WHERE id=$id";
         $pdo->exec($req) or print_r($pdo->errorInfo());
     }
 
@@ -57,7 +57,7 @@ class Product
         require_once ('pdo.php');
         $cnx = new connexion();
         $pdo = $cnx->CNXbase();
-        $req = `UPDATE product SET  name='$this->name', price='$this->price', discount='$this->discount', quantity=$this->quantity WHERE id=$id`;
+        $req = "UPDATE product SET  name='$this->name', price='$this->price', discount='$this->discount', quantity=$this->quantity, description='$this->description' WHERE id=$id";
         $pdo->exec($req) or print_r($pdo->errorInfo());
     }
 
